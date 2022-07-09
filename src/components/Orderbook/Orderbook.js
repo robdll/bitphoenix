@@ -3,7 +3,11 @@ import withWebSocket from "../../utils/withWebSocket";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import { initOrderBook, updateOrderBook } from "../../state/actions";
+import {
+  initOrderBook,
+  updateOrderBook,
+  editOrderbookPrecision,
+} from "../../state/actions";
 import { useDispatch } from "react-redux";
 import Connector from "../Connector/Connector";
 
@@ -27,6 +31,20 @@ function Orderbook(props) {
       ws.subscribeSuccess();
       return;
     }
+  };
+
+  const changePrecision = (prec) => {
+    const { ws } = props;
+    if (ws.subscribed) ws.unsubscribe();
+    ws.subscribe({
+      newOpenMsg: {
+        event: "subscribe",
+        channel: "book",
+        symbol: "tBTCUSD",
+        prec: prec,
+      },
+    });
+    dispatch(editOrderbookPrecision(prec));
   };
 
   useEffect(() => {
@@ -86,6 +104,16 @@ function Orderbook(props) {
 
   return (
     <div className={styles.Orderbook}>
+      <select
+        className={styles.precisionSelector}
+        onChange={(e) => changePrecision(e.target.value)}
+        value={props.precision}
+      >
+        <option value="P0">P0</option>
+        <option value="P1">P1</option>
+        <option value="P2">P2</option>
+        <option value="P3">P3</option>
+      </select>
       <Connector
         subscribed={props.ws.subscribed}
         toggle={props.ws.toggle}
