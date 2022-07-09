@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/bitphoenix/static/css/main.1a81cdaf.css",
+    "main.js": "/bitphoenix/static/js/main.5fbc9654.js",
+    "static/js/787.9847d323.chunk.js": "/bitphoenix/static/js/787.9847d323.chunk.js",
+    "index.html": "/bitphoenix/index.html",
+    "main.1a81cdaf.css.map": "/bitphoenix/static/css/main.1a81cdaf.css.map",
+    "main.5fbc9654.js.map": "/bitphoenix/static/js/main.5fbc9654.js.map",
+    "787.9847d323.chunk.js.map": "/bitphoenix/static/js/787.9847d323.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1a81cdaf.css",
+    "static/js/main.5fbc9654.js"
+  ]
+}
