@@ -11,10 +11,13 @@
   padding: 10px;
   border-radius: 5px;
   color: white;
+  position: relative;
+  border: 1px solid white;
 }
 
 .symbol {
   grid-column: 1 / -1;
+  border-bottom: 1px solid white;
 }
 
 @media (min-width: 600px) {
