@@ -3,13 +3,25 @@ import withWebSocket from "../../utils/withWebSocket";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useEffect } from "react";
+import { initOrderBook, updateOrderBook } from "../../state/actions";
+import { useDispatch } from "react-redux";
 
 function Orderbook(props) {
+  const dispatch = useDispatch();
+
   const onMessage = (msg) => {
     const { ws } = props;
     const parsed = JSON.parse(msg.data);
-    const data = parsed;
-    console.log(data);
+    const data = parsed[1];
+    const valid = data && data !== "hb";
+    if (valid) {
+      const init = Array.isArray(data[0]);
+      if (init) {
+        dispatch(initOrderBook(data));
+      } else {
+        dispatch(updateOrderBook(data));
+      }
+    }
     if (parsed.event === "subscribed") {
       ws.subscribeSuccess();
       return;
@@ -17,13 +29,13 @@ function Orderbook(props) {
   };
 
   useEffect(() => {
-    const { ws } = props;
+    const { ws, precision } = props;
     ws.subscribe({
       newOpenMsg: {
         event: "subscribe",
         channel: "book",
         symbol: "tBTCUSD",
-        prec: "P0",
+        prec: precision,
       },
       newOnMessage: onMessage,
     });
@@ -59,7 +71,11 @@ function Orderbook(props) {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    bids: state.orderbook.bids,
+    asks: state.orderbook.asks,
+    precision: state.orderbook.precision,
+  };
 }
 
 const websocketWrapped = compose(connect(mapStateToProps), withWebSocket);
