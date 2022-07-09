@@ -41,6 +41,28 @@ function Orderbook(props) {
     });
   }, []);
 
+  const { bids, asks } = props;
+  const asksRow = asks.map((item, idx) => {
+    return (
+      <tr key={idx}>
+        <td>{item.price}</td>
+        <td>{Math.abs(item.total.toFixed(3))}</td>
+        <td>{Math.abs(item.amount.toFixed(5))}</td>
+        <td>{item.count}</td>
+      </tr>
+    );
+  });
+  const bidsRows = bids.map((item, idx) => {
+    return (
+      <tr key={idx}>
+        <td>{item.count}</td>
+        <td>{item.amount.toFixed(5)}</td>
+        <td>{item.total.toFixed(3)}</td>
+        <td>{item.price}</td>
+      </tr>
+    );
+  });
+
   return (
     <div className={styles.Orderbook}>
       <h3 className={styles.title}>Orderbook</h3>
@@ -53,7 +75,7 @@ function Orderbook(props) {
             <th className={styles.price}>Price</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>{bidsRows}</tbody>
       </table>
       <table className={styles.sell}>
         <thead>
@@ -64,7 +86,7 @@ function Orderbook(props) {
             <th className={styles.count}>Count</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>{asksRow}</tbody>
       </table>
     </div>
   );
