@@ -49,9 +49,28 @@ const orderbook = (state = initialState, action) => {
       };
     }
     case UPDATE_ORDERBOOK: {
-      console.log("update", action.payload);
+      const [price, count, amount] = action.payload;
+      let target = amount > 0 ? [...state.bids] : [...state.asks];
+      const targetIndex = target.findIndex((item) => item.price === price);
+      if (targetIndex === -1) {
+        target.push({ price, count, amount });
+      } else {
+        target.splice(targetIndex, 1, { price, count, amount });
+      }
+      let total = 0;
+      target = target.map((item) => {
+        total += item.amount;
+        item = {
+          price: item.price,
+          count: item.count,
+          total,
+          amount: item.amount,
+        };
+        return item;
+      });
       return {
         ...state,
+        [amount > 0 ? "bids" : "asks"]: target,
       };
     }
     case EDIT_ORDERBOOK_PRECISION: {
