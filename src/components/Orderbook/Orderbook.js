@@ -3,13 +3,25 @@ import withWebSocket from "../../utils/withWebSocket";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useEffect } from "react";
+import { initOrderBook, updateOrderBook } from "../../state/actions";
+import { useDispatch } from "react-redux";
 
 function Orderbook(props) {
+  const dispatch = useDispatch();
+
   const onMessage = (msg) => {
     const { ws } = props;
     const parsed = JSON.parse(msg.data);
-    const data = parsed;
-    console.log(data);
+    const data = parsed[1];
+    const valid = data && data !== "hb";
+    if (valid) {
+      const init = Array.isArray(data[0]);
+      if (init) {
+        dispatch(initOrderBook(data));
+      } else {
+        dispatch(updateOrderBook(data));
+      }
+    }
     if (parsed.event === "subscribed") {
       ws.subscribeSuccess();
       return;
@@ -17,17 +29,39 @@ function Orderbook(props) {
   };
 
   useEffect(() => {
-    const { ws } = props;
+    const { ws, precision } = props;
     ws.subscribe({
       newOpenMsg: {
         event: "subscribe",
         channel: "book",
         symbol: "tBTCUSD",
-        prec: "P0",
+        prec: precision,
       },
       newOnMessage: onMessage,
     });
   }, []);
+
+  const { bids, asks } = props;
+  const asksRow = asks.map((item, idx) => {
+    return (
+      <tr key={idx}>
+        <td>{item.price}</td>
+        <td>{Math.abs(item.total.toFixed(3))}</td>
+        <td>{Math.abs(item.amount.toFixed(5))}</td>
+        <td>{item.count}</td>
+      </tr>
+    );
+  });
+  const bidsRows = bids.map((item, idx) => {
+    return (
+      <tr key={idx}>
+        <td>{item.count}</td>
+        <td>{item.amount.toFixed(5)}</td>
+        <td>{item.total.toFixed(3)}</td>
+        <td>{item.price}</td>
+      </tr>
+    );
+  });
 
   return (
     <div className={styles.Orderbook}>
@@ -41,7 +75,7 @@ function Orderbook(props) {
             <th className={styles.price}>Price</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>{bidsRows}</tbody>
       </table>
       <table className={styles.sell}>
         <thead>
@@ -52,14 +86,18 @@ function Orderbook(props) {
             <th className={styles.count}>Count</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>{asksRow}</tbody>
       </table>
     </div>
   );
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    bids: state.orderbook.bids,
+    asks: state.orderbook.asks,
+    precision: state.orderbook.precision,
+  };
 }
 
 const websocketWrapped = compose(connect(mapStateToProps), withWebSocket);
