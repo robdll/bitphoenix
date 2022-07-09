@@ -22,3 +22,13 @@ export const editOrderbookPrecision = (payload) => {
     type: EDIT_ORDERBOOK_PRECISION,
   };
 };
+
+/** TICKER ACTIONS */
+export const UPDATE_TICKER = "ticker/UPDATE_TICKER";
+
+export const updateTicker = (payload) => {
+  return {
+    payload,
+    type: UPDATE_TICKER,
+  };
+};

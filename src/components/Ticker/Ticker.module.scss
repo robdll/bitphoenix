@@ -1,5 +1,6 @@
 .Ticker {
   display: grid;
+  position: relative;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(5, 40px);
   align-items: center;
@@ -11,13 +12,19 @@
   padding: 10px;
   border-radius: 5px;
   color: white;
-  position: relative;
-  border: 1px solid white;
 }
 
 .symbol {
   grid-column: 1 / -1;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid;
+}
+
+.red {
+  color: rgb(222, 82, 82);
+}
+
+.green {
+  color: rgb(0, 127, 0);
 }
 
 @media (min-width: 600px) {
