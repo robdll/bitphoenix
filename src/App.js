@@ -1,5 +1,6 @@
 import styles from "./App.module.scss";
 import Orderbook from "./components/Orderbook/Orderbook";
+import Trades from "./components/Trades/Trades";
 import Ticker from "./components/Ticker/Ticker";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <main className={styles.main}>
         <Ticker />
         <Orderbook />
+        <Trades />
       </main>
     </>
   );
