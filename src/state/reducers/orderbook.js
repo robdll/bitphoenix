@@ -7,7 +7,7 @@ import {
 const initialState = {
   bids: [],
   asks: [],
-  precision: "P0",
+  precision: "P1",
 };
 
 const orderbook = (state = initialState, action) => {
@@ -68,6 +68,7 @@ const orderbook = (state = initialState, action) => {
         };
         return item;
       });
+
       return {
         ...state,
         [amount > 0 ? "bids" : "asks"]: target,
@@ -76,6 +77,7 @@ const orderbook = (state = initialState, action) => {
     case EDIT_ORDERBOOK_PRECISION: {
       return {
         ...state,
+        precision: action.payload,
       };
     }
     default: {
