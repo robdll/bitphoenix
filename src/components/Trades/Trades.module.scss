@@ -8,16 +8,37 @@
   padding: 10px;
   border-radius: 5px;
   color: white;
+  position: relative;
+  max-height: 120vh;
+  border: 1px solid white;
 }
 
 .title {
   grid-column: 1 / -1;
+  border-bottom: 1px solid;
+}
+
+.table {
+  align-self: flex-start;
+}
+
+.row {
+  font-weight: 700;
 }
 
 .time,
 .price,
 .amount {
   width: 33%;
+  border-bottom: 1px solid;
+}
+
+.red {
+  color: rgb(222, 82, 82);
+}
+
+.green {
+  color: rgb(0, 127, 0);
 }
 
 @media (min-width: 1024px) {

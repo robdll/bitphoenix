@@ -32,3 +32,21 @@ export const updateTicker = (payload) => {
     type: UPDATE_TICKER,
   };
 };
+
+/** TRADES ACTIONS */
+export const UPDATE_TRADES = "trades/UPDATE_TRADES";
+export const INIT_TRADES = "trades/INIT_TRADES";
+
+export const updateTrades = (payload) => {
+  return {
+    payload,
+    type: UPDATE_TRADES,
+  };
+};
+
+export const initTrades = (payload) => {
+  return {
+    payload,
+    type: INIT_TRADES,
+  };
+};
