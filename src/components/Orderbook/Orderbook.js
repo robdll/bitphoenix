@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { useEffect } from "react";
 import { initOrderBook, updateOrderBook } from "../../state/actions";
 import { useDispatch } from "react-redux";
+import Connector from "../Connector/Connector";
 
 function Orderbook(props) {
   const dispatch = useDispatch();
@@ -65,6 +66,11 @@ function Orderbook(props) {
 
   return (
     <div className={styles.Orderbook}>
+      <Connector
+        subscribed={props.ws.subscribed}
+        toggle={props.ws.toggle}
+        subscribing={props.ws.subscribing}
+      />
       <h3 className={styles.title}>Orderbook</h3>
       <table className={styles.buy}>
         <thead>

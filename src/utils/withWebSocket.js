@@ -28,6 +28,8 @@ function withWebSocket(WrappedComponent) {
       }
     };
 
+    toggle = () => (this.ws ? this.unsubscribe() : this.subscribe());
+
     onOpen = () => this.ws.send(JSON.stringify(this.openMsg));
 
     onError = (err) => this.unsubscribe(err);
@@ -49,6 +51,7 @@ function withWebSocket(WrappedComponent) {
             subscribeSuccess: this.subscribeSuccess,
             subscribe: this.subscribe,
             unsubscribe: this.unsubscribe,
+            toggle: this.toggle,
           }}
         />
       );
@@ -62,6 +65,7 @@ export const propTypesWS = {
   subscribeSuccess: PropTypes.func.isRequired,
   subscribe: PropTypes.func.isRequired,
   unsubscribe: PropTypes.func.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default withWebSocket;
