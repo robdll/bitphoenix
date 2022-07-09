@@ -12,13 +12,14 @@
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, auto);
+  grid-template-rows: repeat(3, auto);
 }
 
 @media (min-width: 1024px) {
   .main {
     display: grid;
     gap: 10px;
+    grid-template-columns: 65% auto;
     grid-template-rows: repeat(2, auto);
   }
 }
