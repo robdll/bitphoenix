@@ -1,6 +1,34 @@
 import styles from "./Orderbook.module.scss";
+import withWebSocket from "../../utils/withWebSocket";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { useEffect } from "react";
 
 function Orderbook(props) {
+  const onMessage = (msg) => {
+    const { ws } = props;
+    const parsed = JSON.parse(msg.data);
+    const data = parsed;
+    console.log(data);
+    if (parsed.event === "subscribed") {
+      ws.subscribeSuccess();
+      return;
+    }
+  };
+
+  useEffect(() => {
+    const { ws } = props;
+    ws.subscribe({
+      newOpenMsg: {
+        event: "subscribe",
+        channel: "book",
+        symbol: "tBTCUSD",
+        prec: "P0",
+      },
+      newOnMessage: onMessage,
+    });
+  }, []);
+
   return (
     <div className={styles.Orderbook}>
       <h3 className={styles.title}>Orderbook</h3>
@@ -30,4 +58,9 @@ function Orderbook(props) {
   );
 }
 
-export default Orderbook;
+function mapStateToProps(state) {
+  return {};
+}
+
+const websocketWrapped = compose(connect(mapStateToProps), withWebSocket);
+export default websocketWrapped(Orderbook);
