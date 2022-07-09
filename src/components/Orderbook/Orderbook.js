@@ -43,9 +43,19 @@ function Orderbook(props) {
   }, []);
 
   const { bids, asks } = props;
-  const asksRow = asks.map((item, idx) => {
+  const asksRow = asks.map((item, idx, arr) => {
+    const total = Math.abs(arr[arr.length - 1].total);
+    let destination = (Math.abs(item.total) * 100) / total;
+    let rowBg = {
+      backgroundImage: `linear-gradient(
+      90deg,
+      rgba(228,29,19,.3) ${destination.toFixed(0)}%,
+      rgba(255, 255, 255, 0) ${destination.toFixed(0)}%,
+      rgba(255, 255, 255, 0) 100%
+    )`,
+    };
     return (
-      <tr key={idx}>
+      <tr key={idx} className={styles.depth} style={rowBg}>
         <td>{item.price}</td>
         <td>{Math.abs(item.total.toFixed(3))}</td>
         <td>{Math.abs(item.amount.toFixed(5))}</td>
@@ -53,9 +63,19 @@ function Orderbook(props) {
       </tr>
     );
   });
-  const bidsRows = bids.map((item, idx) => {
+  const bidsRows = bids.map((item, idx, arr) => {
+    const total = Math.abs(arr[arr.length - 1].total);
+    let destination = (Math.abs(item.total) * 100) / total;
+    let rowBg = {
+      backgroundImage: `linear-gradient(
+      270deg,
+      rgba(111, 234, 53, 0.3) ${destination.toFixed(0)}%,
+      rgba(255, 255, 255, 0) ${destination.toFixed(0)}%,
+      rgba(255, 255, 255, 0) 100%
+    )`,
+    };
     return (
-      <tr key={idx}>
+      <tr key={idx} className={styles.depth} style={rowBg}>
         <td>{item.count}</td>
         <td>{item.amount.toFixed(5)}</td>
         <td>{item.total.toFixed(3)}</td>

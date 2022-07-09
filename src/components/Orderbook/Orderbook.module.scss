@@ -10,10 +10,25 @@
   border-radius: 5px;
   color: white;
   position: relative;
+  border: 1px solid white;
 }
 
 .title {
   grid-column: 1 / -1;
+  border-bottom: 1px solid;
+}
+
+.sell,
+.buy {
+  align-self: flex-start;
+}
+
+.red {
+  color: rgb(222, 82, 82);
+}
+
+.green {
+  color: rgb(0, 127, 0);
 }
 
 .count,
@@ -21,6 +36,12 @@
 .total,
 .price {
   width: 25%;
+  border-bottom: 1px solid;
+}
+
+.buy .depth,
+.sell .depth {
+  background: rgba(255, 255, 255, 0);
 }
 
 @media (min-width: 600px) {
