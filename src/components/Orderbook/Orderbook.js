@@ -1,4 +1,7 @@
 import styles from "./Orderbook.module.scss";
+import withWebSocket from "../../utils/withWebSocket";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
 function Orderbook(props) {
   return (
@@ -30,4 +33,9 @@ function Orderbook(props) {
   );
 }
 
-export default Orderbook;
+function mapStateToProps(state) {
+  return {};
+}
+
+const websocketWrapped = compose(connect(mapStateToProps), withWebSocket);
+export default websocketWrapped(Orderbook);
