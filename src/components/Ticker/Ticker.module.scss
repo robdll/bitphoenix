@@ -16,3 +16,14 @@
 .symbol {
   grid-column: 1 / -1;
 }
+
+@media (min-width: 600px) {
+  .Ticker {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 40px);
+  }
+  span:nth-of-type(odd) {
+    grid-row: 2;
+    justify-self: center;
+  }
+}
