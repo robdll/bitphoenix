@@ -1,6 +1,8 @@
 # Bit Phoenix
 
-Bitfinex widget to check real time BTC price
+Bitfinex widget to check real time BTC price. 
+
+[Demo](https://www.robertodilillo.dev/bitphoenix/)
 
 # Requisites
 
